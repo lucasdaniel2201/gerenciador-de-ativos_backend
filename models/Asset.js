@@ -1,6 +1,6 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
-const User = require('./User'); // Importa o modelo User
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
+import User from './User.js';
 
 const Asset = sequelize.define('Asset', {
   id: {
@@ -33,19 +33,18 @@ const Asset = sequelize.define('Asset', {
     type: DataTypes.TEXT,
     allowNull: true,
   },
-  // Chave estrangeira para o usuário que possui o ativo
   userId: {
     type: DataTypes.INTEGER,
     references: {
-      model: User, // Referencia o modelo User
+      model: User,
       key: 'id',
     },
     allowNull: false,
   }
 });
 
-// Define o relacionamento: Um Usuário tem muitos Ativos
+// Relacionamentos
 User.hasMany(Asset, { foreignKey: 'userId', as: 'assets' });
 Asset.belongsTo(User, { foreignKey: 'userId' });
 
-module.exports = Asset;
+export default Asset;
