@@ -9,7 +9,7 @@ const generateToken = (id) => {
 };
 
 export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, isPremium } = req.body;
 
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
@@ -32,7 +32,7 @@ export const register = async (req, res) => {
       return res.status(409).json({ message: 'Email já cadastrado.' });
     }
 
-    const newUser = await User.create({ username, email, password });
+    const newUser = await User.create({ username, email, password, isPremium });
     const token = generateToken(newUser.id);
 
     res.status(201).json({
