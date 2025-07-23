@@ -16,24 +16,17 @@ router.post(
     let event;
 
     try {
-      console.log("Recebendo webhook com assinatura:", sig);
-      console.log("Corpo bruto da requisição:", req.body.toString());
       event = stripeClient.webhooks.constructEvent(
         req.body,
         sig,
         "whsec_X5QSzIvfXbLugfjHNjLscCtCN87FKuXf" // Substitua pela chave de assinatura correta
       );
-      console.log("Evento do webhook recebido:", event.type);
     } catch (err) {
       console.error("Erro ao verificar webhook:", err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     if (event.type === "checkout.session.completed") {
-      console.log(
-        "Evento checkout.session.completed recebido:",
-        event.data.object
-      );
       const session = event.data.object;
       const { tempUserId } = session.metadata;
 
