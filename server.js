@@ -8,6 +8,7 @@ import assetRoutes from "./routes/assetRoutes.js";
 import usersRouter from "./routes/usersRouter.js";
 import checkoutRoute from "./routes/checkoutRoute.js";
 import webhookRoutes from "./routes/webhookRoutes.js";
+import subscriptionUpdateRoute from "./routes/subscriptionUpdateRoute.js";
 import cors from "cors";
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(
 
 // Rota do webhook deve vir antes do express.json()
 app.use("/webhook", webhookRoutes);
+app.use("/webhook/stripe", subscriptionUpdateRoute);
 
 // Aplicar express.json() para outras rotas
 app.use(express.json());

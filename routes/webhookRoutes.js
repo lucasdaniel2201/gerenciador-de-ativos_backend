@@ -4,9 +4,7 @@ import axios from "axios";
 import { tempUserData } from "./checkoutRoute.js";
 
 const router = express.Router();
-const stripeClient = stripe(
-  "sk_test_51Ro7eaAzyiCrPFPqP462OGaPirAAsHUHUDUKRbtpVr15tfauNWgeIDIoiiQV9PYBG6ADif8k6TgNcdVXbeIHN8SR00lh196dn8"
-);
+const stripeClient = stripe(process.env.STRIPE_SECRET_KEY);
 
 router.post(
   "/",
@@ -19,7 +17,7 @@ router.post(
       event = stripeClient.webhooks.constructEvent(
         req.body,
         sig,
-        "whsec_X5QSzIvfXbLugfjHNjLscCtCN87FKuXf" // Substitua pela chave de assinatura correta
+        process.env.STRIPE_REGISTER_WEBHOOK_SECRET // Substitua pela chave de assinatura correta
       );
     } catch (err) {
       console.error("Erro ao verificar webhook:", err.message);
@@ -46,6 +44,8 @@ router.post(
               email,
               password,
               isPremium: true,
+              stripeCustomerId: session.customer,
+              stripeSubscriptionId: session.subscription,
             }
           );
           console.log(

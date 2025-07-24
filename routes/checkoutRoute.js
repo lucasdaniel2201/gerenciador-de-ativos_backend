@@ -3,9 +3,7 @@ import stripe from "stripe";
 import { v4 as uuidv4 } from "uuid";
 
 const router = express.Router();
-const stripeClient = stripe(
-  "sk_test_51Ro7eaAzyiCrPFPqP462OGaPirAAsHUHUDUKRbtpVr15tfauNWgeIDIoiiQV9PYBG6ADif8k6TgNcdVXbeIHN8SR00lh196dn8"
-);
+const stripeClient = stripe(process.env.STRIPE_SECRET_KEY);
 const YOUR_DOMAIN = "http://localhost:5173";
 
 export const tempUserData = {}; // Exportar para uso no webhook
