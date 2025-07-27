@@ -17,7 +17,7 @@ router.post(
       event = stripeClient.webhooks.constructEvent(
         req.body,
         sig,
-        process.env.STRIPE_REGISTER_WEBHOOK_SECRET // Substitua pela chave de assinatura correta
+        process.env.STRIPE_REGISTER_WEBHOOK_SECRET
       );
     } catch (err) {
       console.error("Erro ao verificar webhook:", err.message);

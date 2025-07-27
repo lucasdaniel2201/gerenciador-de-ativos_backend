@@ -46,7 +46,7 @@ router.post(
         break;
 
       default:
-        console.log(`⚠️ Unhandled event type ${event.type}`);
+        " ";
     }
 
     res.json({ received: true });
@@ -56,7 +56,6 @@ router.post(
 async function updateSubscriptionInDatabase(subscription) {
   console.log("🔄 Updating subscription in database...");
 
-  // ✅ AGORA VAI FUNCIONAR porque o model terá stripeCustomerId
   const user = await User.findOne({
     where: { stripeCustomerId: subscription.customer },
   });

@@ -6,7 +6,7 @@ const router = express.Router();
 const stripeClient = stripe(process.env.STRIPE_SECRET_KEY);
 const YOUR_DOMAIN = "http://localhost:5173";
 
-export const tempUserData = {}; // Exportar para uso no webhook
+export const tempUserData = {};
 
 router.post("/create-checkout-session", async (req, res) => {
   try {
@@ -30,8 +30,6 @@ router.post("/create-checkout-session", async (req, res) => {
       success_url: `${YOUR_DOMAIN}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${YOUR_DOMAIN}/canceled`,
     });
-
-    console.log("Checkout session created:", session.id);
     res.json({ sessionId: session.id });
   } catch (error) {
     console.error("Erro ao criar sessão de checkout:", error);
