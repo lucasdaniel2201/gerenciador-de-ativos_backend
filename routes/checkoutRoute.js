@@ -18,7 +18,7 @@ router.post("/create-checkout-session", async (req, res) => {
     const session = await stripeClient.checkout.sessions.create({
       line_items: [
         {
-          price: "price_1Ro7g4AzyiCrPFPqAw97mRf9",
+          price: process.env.STRIPE_PRICE_KEY,
           quantity: 1,
         },
       ],

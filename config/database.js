@@ -1,15 +1,11 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 
-import { Sequelize } from 'sequelize';
+import { Sequelize } from "sequelize";
 
-const sequelize = new Sequelize({
-  dialect: 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  port: process.env.DB_PORT || 5432,
-  database: process.env.DB_NAME,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: "postgres",
+  protocol: "postgres",
   logging: false,
   define: {
     underscored: false,
@@ -20,6 +16,12 @@ const sequelize = new Sequelize({
     min: 0,
     acquire: 30000,
     idle: 10000,
+  },
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Necessário para Supabase
+    },
   },
 });
 
